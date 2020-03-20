@@ -1,43 +1,48 @@
 import React from "react";
 import TrelloCard from "./TrelloCard";
 import TrelloActionButton from "./TrelloActionButton";
-import { Droppable } from "react-beautiful-dnd";
+import { Droppable, Draggable } from "react-beautiful-dnd";
+import styled from "styled-components";
 
-const TrelloList = ({ title, cards, listID }) => {
+const ListContainer = styled.div`
+  background-color: #ccc;
+  border-radius: 3px;
+  width: 350px;
+  padding: 8px;
+  margin-right: 8px;
+  height: 100%;
+`;
+
+const TrelloList = ({ title, cards, listID, index }) => {
   return (
-    <Droppable droppableId={String(listID)}>
+    <Draggable draggableId={String(listID)} index={index}>
       {provided => (
-        <div
-          {...provided.droppableProps}
+        <ListContainer
           ref={provided.innerRef}
-          style={styles.container}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
         >
-          <h4>{title}</h4>
-          {cards.map((card, index) => (
-            <TrelloCard
-              key={card.id}
-              text={card.text}
-              id={card.id}
-              index={index}
-            />
-          ))}
-          {provided.placeholder}
-          <TrelloActionButton listID={listID} />
-        </div>
+          <Droppable droppableId={String(listID)}>
+            {provided => (
+              <div {...provided.droppableProps} ref={provided.innerRef}>
+                <h4>{title}</h4>
+                {cards.map((card, index) => (
+                  <TrelloCard
+                    key={card.id}
+                    text={card.text}
+                    id={card.id}
+                    index={index}
+                  />
+                ))}
+                {provided.placeholder}
+                <TrelloActionButton listID={listID} />
+              </div>
+            )}
+          </Droppable>
+        </ListContainer>
       )}
-    </Droppable>
+    </Draggable>
   );
-};
-
-const styles = {
-  container: {
-    backgroundColor: "#ccc",
-    borderRadius: 3,
-    width: 350,
-    padding: 8,
-    marginRight: 8,
-    height: "100%"
-  }
 };
 
 export default TrelloList;

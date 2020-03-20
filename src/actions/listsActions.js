@@ -1,8 +1,29 @@
 import { CONSTANTS } from "../actions";
 
 export const addList = title => {
-  return { 
+  return {
     type: CONSTANTS.ADD_LIST,
     payload: title
-   };
+  };
+};
+
+export const sort = (
+  droppableIdStart,
+  droppableIdEnd,
+  droppableIndexStart,
+  droppableIndexEnd,
+  draggableID,
+  type
+) => {
+  return {
+    type: CONSTANTS.DRAG_HAPPENED,
+    payload: {
+      droppableIdStart,
+      droppableIdEnd,
+      droppableIndexStart,
+      droppableIndexEnd,
+      draggableID,
+      type
+    }
+  };
 };
