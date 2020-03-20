@@ -10,7 +10,12 @@ function App(props) {
       <h2>Trello Clone</h2>
       <div style={styles.listsContainer}>
         {lists.map(list => (
-          <TrelloList title={list.title} cards={list.cards} key={list.id} />
+          <TrelloList
+            listID={list.id}
+            title={list.title}
+            cards={list.cards}
+            key={list.id}
+          />
         ))}
         <TrelloActionButton list />
       </div>
